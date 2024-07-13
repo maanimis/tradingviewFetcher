@@ -130,9 +130,10 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     console.log("DATA loaded in content_script:", data);
     const result = await downloadStep(data._mySecretData);
     await chrome.storage.local.set({ _myData: null });
-    result &&
+    if (result)
       alert(
-        `total failed: ${result.status.failed}\n` + result.undone.join("\n")
+        `total: ${result.status.total}\nsuccess: ${result.status.success}\nfailed: ${result.status.failed}>>>\n` +
+          result.undone.join("\n")
       );
   }
 })();
