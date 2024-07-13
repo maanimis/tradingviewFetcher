@@ -4,7 +4,7 @@ export const result = ({ success, msg, data }) => {
   this.success = success;
   this.msg = msg;
   this.data = data;
-  console.table(this);
+  // console.table(this);
 };
 
 export const parseHtml = (htmlString) => {
@@ -54,7 +54,7 @@ export const requestFetch = async (url, headers) => {
 
 export const downloadResult = async ({
   text,
-  name="",
+  name = "",
   ext = "pine",
   setTimestamp = true,
 }) => {

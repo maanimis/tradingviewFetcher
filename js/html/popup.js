@@ -50,7 +50,6 @@ async function fetchHandler() {
       progressBar.value = progress;
     }
 
-    console.log("Fetch responses:", responses);
     statusElement.textContent = "Downloading...!";
 
     return responses;
@@ -65,9 +64,12 @@ async function fetchHandler() {
 
   const allData = await fetchAllData();
 
-  await chrome.storage.local.set({ _myData: allData }, function () {
+  await chrome.storage.local.set({ _mySecretData: allData }, function () {
+    console.log("Data saved:", allData);
     console.log("Data saved locally");
   });
+
+  await util.sleep(2000);
 
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const message = { action: "download", data: allData };

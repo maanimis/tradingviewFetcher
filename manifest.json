@@ -4,12 +4,14 @@
   "version": "1.0",
   "description": "Fetch and save responses from TradingView script URLs",
   "permissions": [
+    "scripting",
+    "storage",
     "activeTab",
+    "tabs",
+    "webNavigation",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "webRequest",
-    "storage",
-    "scripting"
+    "declarativeNetRequestFeedback"
   ],
   "action": {
     "default_popup": "pages/popup.html",

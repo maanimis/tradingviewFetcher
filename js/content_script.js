@@ -36,7 +36,7 @@ const result = ({ success, msg, data }) => {
   this.success = success;
   this.msg = msg;
   this.data = data;
-  console.table(this);
+  // console.table(this);
 };
 
 const parseHtml = (htmlString) => {
@@ -78,6 +78,10 @@ const downloadResult = async ({
 };
 
 async function downloadStep(allData) {
+  if (!allData) {
+    alert("somthing wrong!!");
+    return false;
+  }
   const failed = [];
   const status = {
     total: 0,
@@ -86,7 +90,7 @@ async function downloadStep(allData) {
   };
 
   for (let result of allData) {
-    status.total++;
+    ++status.total;
     await sleep(1000);
     if (result.success) {
       console.log(`checking: ${result.url}`);
@@ -98,17 +102,17 @@ async function downloadStep(allData) {
         const url = target.sourceCode.replace("%ID%", id);
         const data = await requestFetch(url, headers, true);
         if (data) {
-          status.success++;
+          ++status.success;
           await downloadResult({ text: data.source, name: data.scriptName });
           continue;
         }
       }
     }
-    status.failed++;
+    ++status.failed;
     failed.push(result.url);
     console.log("failed!!");
   }
-  return failed;
+  return { status, undone: failed };
 }
 
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
@@ -122,10 +126,13 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 (async () => {
   if (location.href.includes(target.baseCode)) {
     console.log("Starting download step...");
-    const data = await chrome.storage.local.get("_myData");
-    // console.log("DATA:", data);
-    const failedURL = await downloadStep(data._myData);
+    const data = await chrome.storage.local.get("_mySecretData");
+    console.log("DATA loaded in content_script:", data);
+    const result = await downloadStep(data._mySecretData);
     await chrome.storage.local.set({ _myData: null });
-    alert(`total failed: ${failedURL.length}\n` + failedURL.join("\n"));
+    result &&
+      alert(
+        `total failed: ${result.status.failed}\n` + result.undone.join("\n")
+      );
   }
 })();
