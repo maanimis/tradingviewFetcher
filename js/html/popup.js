@@ -69,8 +69,6 @@ async function fetchHandler() {
     console.log("Data saved locally");
   });
 
-  await util.sleep(2000);
-
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     const message = { action: "download", data: allData };
     chrome.tabs.sendMessage(tabs[0].id, message, function (response) {
