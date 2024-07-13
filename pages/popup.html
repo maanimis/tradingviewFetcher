@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TradingView Script Fetcher</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        width: 300px;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+      }
+      button {
+        margin-top: 10px;
+        width: 100%;
+      }
+      progress {
+        width: 100%;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>TradingView Script Fetcher</h2>
+    <textarea
+      id="urls"
+      placeholder="Enter URLs here, one per line..."
+    ></textarea>
+    <button id="fetch">Fetch Data</button>
+    <progress id="progress" value="0" max="100"></progress>
+    <div id="status"></div>
+    <script type="module" src="../js/html/popup.js"></script>
+  </body>
+</html>

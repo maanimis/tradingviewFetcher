@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "TradingView Script Fetcher",
+  "version": "1.0",
+  "description": "Fetch and save responses from TradingView script URLs",
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "webRequest",
+    "storage",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "pages/popup.html",
+    "default_icon": {
+      "128": "images/128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background/index.js"
+  },
+  "icons": {
+    "128": "images/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/content_script.js"
+      ]
+    }
+  ]
+}
