@@ -1,8 +1,12 @@
 {
+  "$schema": "https://json.schemastore.org/chrome-manifest.json",
   "manifest_version": 3,
-  "name": "TradingView Script Fetcher",
-  "version": "1.0",
+  "version": "2.0",
+  "name": "tradingviewFetcher",
   "description": "Fetch and save responses from TradingView script URLs",
+  "icons": {
+    "128": "images/128.png"
+  },
   "permissions": [
     "scripting",
     "storage",
@@ -13,17 +17,14 @@
     "declarativeNetRequestWithHostAccess",
     "declarativeNetRequestFeedback"
   ],
-  "action": {
-    "default_popup": "pages/popup.html",
-    "default_icon": {
-      "128": "images/128.png"
-    }
-  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
-    "service_worker": "js/background/index.js"
-  },
-  "icons": {
-    "128": "images/128.png"
+    "chromium:service_worker": "./scripts/background.ts",
+    "firefox:scripts": [
+      "./scripts/background.ts"
+    ]
   },
   "content_scripts": [
     {
@@ -31,8 +32,16 @@
         "<all_urls>"
       ],
       "js": [
-        "js/content_script.js"
-      ]
+        "scripts/content_script.ts"
+      ],
+      "css": []
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "public/popup.html",
+    "default_icon": {
+      "128": "images/128.png"
+    }
+  },
+  "author": "Meisam Maani"
 }
